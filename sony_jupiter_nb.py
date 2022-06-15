@@ -45,15 +45,16 @@ def task3(df):
     df['meta_discrepancy'] =''
     for index,row in df.iterrows():
         l =[]
-        if np.isnan(row['title_gpms_ids']):
+        if pd.isnull(row['title_gpms_ids']) or row['title_gpms_ids'] == " ":
+        #print("ss")
             l.append(''.join("title_gpms_ids"))
-        elif(np.isnan(row['custom_metadata.content_details.language_dubbed'])):
+        if(pd.isnull(row['custom_metadata.content_details.language_dubbed']) or row['custom_metadata.content_details.language_dubbed']== " "):
             l.append(''.join("custom_metadata.content_details.language_dubbed"))
-        elif(np.isnan(row['custom_metadata.dcs.dcs_vendor'])):
+        if(pd.isnull(row['custom_metadata.dcs.dcs_vendor'] ) or row['custom_metadata.dcs.dcs_vendor']== " "):
             l.append(''.join("custom_metadata.dcs.dcs_vendor"))
-        elif(np.isnan(row['custom_metadata.format_details.audio_configuration'])):
+        if(pd.isnull(row['custom_metadata.format_details.audio_configuration']) or row['custom_metadata.format_details.audio_configuration']== " " ):
             l.append(''.join("custom_metadata.format_details.audio_configuration"))
-        elif(np.isnan(row['custom_metadata.format_details.audio_element'])):
+        if(pd.isnull(row['custom_metadata.format_details.audio_element'])  or row['custom_metadata.format_details.audio_element'] == " "):
             l.append(''.join("custom_metadata.format_details.audio_element"))
         df.at[index,'meta_discrepancy'] = l
     return(df)
@@ -62,7 +63,7 @@ def task3(df):
 # In[279]:
 
 
-df.apply(task3)
+df=task3(df)
 
 #writing into new file csv
 df.to_csv("newfile.csv",index=False)
